@@ -19,12 +19,21 @@
 
   <script>
     liff.init({ liffId: "YOUR_LIFF_ID" }).then(() => {
+      alert("LIFF初期化完了");
+
       if (!liff.isLoggedIn()) {
+        alert("ログインしていません。ログインします。");
         liff.login();
       } else {
+        alert("ログイン済み");
+
         liff.getProfile().then(profile => {
+          alert("プロフィール取得：" + profile.displayName);
+
           document.getElementById("reserveForm").addEventListener("submit", function(e) {
             e.preventDefault();
+            alert("フォーム送信開始");
+
             fetch("https://script.google.com/macros/s/AKfycbyyQskYp81BHzqhjnI4lT0sOkokexwhnyd4s1lc4Ma6vpW1nreTrReoONPlyFSOWgLuFQ/exec", {
               method: "POST",
               headers: {
@@ -37,13 +46,20 @@
               })
             })
             .then(res => res.text())
-            .then(txt => alert("送信結果：" + txt))
-            .catch(err => console.error("送信エラー", err));
+            .then(txt => {
+              alert("送信結果：" + txt);
+            })
+            .catch(err => {
+              alert("送信失敗：" + err.message);
+            });
           });
+        }).catch(err => {
+          alert("プロフィール取得失敗：" + err.message);
         });
       }
+    }).catch(err => {
+      alert("LIFF初期化失敗：" + err.message);
     });
   </script>
-  
 </body>
 </html>
