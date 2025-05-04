@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>説明会予約</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <h1>説明会予約フォーム</h1>
+  <form id="reserveForm">
+    <label>名前：<input type="text" id="name" required></label><br>
+    <label>日程：
+      <select id="date">
+        <option value="2025-05-10">5月10日</option>
+        <option value="2025-05-17">5月17日</option>
+      </select>
+    </label><br>
+    <button type="submit">予約</button>
+  </form>
+
+  <script>
+    liff.init({ liffId: "YOUR_LIFF_ID" }).then(() => {
+      liff.getProfile().then(profile => {
+        document.getElementById('reserveForm').addEventListener('submit', function (e) {
+          e.preventDefault();
+          fetch('YOUR_APPS_SCRIPT_URL', {
+            method: 'POST',
+            body: JSON.stringify({
+              name: document.getElementById('name').value,
+              date: document.getElementById('date').value,
+              userId: profile.userId
+            }),
+            headers: { 'Content-Type': 'application/json' }
+          }).then(res => alert('予約完了しました！'));
+        });
+      });
+    });
+  </script>
+</body>
+</html>
