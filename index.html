@@ -36,6 +36,7 @@
 
             fetch("https://script.google.com/macros/s/AKfycbyyQskYp81BHzqhjnI4lT0sOkokexwhnyd4s1lc4Ma6vpW1nreTrReoONPlyFSOWgLuFQ/exec", {
               method: "POST",
+              mode: "no-cors",  // ★これが重要！
               headers: {
                 "Content-Type": "application/json"
               },
